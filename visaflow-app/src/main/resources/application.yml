@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: visaflow-app
+  profiles:
+    active: dev
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/visaflow
+    username: visaflow
+    password: password
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update # For MVP/Dev only
+    properties:
+      hibernate:
+        format_sql: true
+  
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:18080/realms/visaflow-realm
+          jwk-set-uri: http://localhost:18080/realms/visaflow-realm/protocol/openid-connect/certs
+
+visaflow:
+  minio:
+    url: http://localhost:9000
+    access-key: minioadmin
+    secret-key: minioadmin
+    bucket: documents
+  temporal:
+    target: localhost:7233
+    workflow-task-timeout: PT10S
+
+logging:
+  level:
+    com.visaflow: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
